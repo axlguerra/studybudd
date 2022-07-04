@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+
+        {% csrf_token %}
+
+        {{  form.as_p  }}
+        <!-- the .as_p wraps everything in a p html tag -->
+
+        <input type="submit" value="Submit">
+
+
+    </form>
+
+
+</div>
+
+{% endblock %}

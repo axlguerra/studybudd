@@ -1,0 +1,1 @@
+Web: gunicorn studybud.wsgi --log-file-

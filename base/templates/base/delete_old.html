@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+
+
+<form method="POST" action="">
+
+    {% csrf_token %}
+
+
+    <p>are you sure you want to delete this item "{{obj}}"?</p>
+
+    <!-- redirect back to previeus page -->
+
+    <a href="{{request.META.HTTP_REFERER}}">go Back</a>
+
+    <input type="submit" name="" id="" value="Confirm">
+
+
+</form>
+
+
+{% endblock content %}
