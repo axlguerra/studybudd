@@ -1,7 +1,7 @@
 from distutils.archive_util import make_zipfile
 from email.policy import default
 from re import U
-from tkinter.tix import Tree
+# from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
 
