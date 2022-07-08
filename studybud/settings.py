@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
 
     'rest_framework',
+    'storages',
 ]
 
 
@@ -174,3 +175,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = True
+
+
+
+AWS_ACCESS_KEY_ID = 'AKIA22AAIARIXO7PKJVQ'
+AWS_SECRET_ACCESS_KEY =  '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'
+AWS_STORAGE_BUCKET_NAME = 'studybudstatic'
+
+AWS_S3_FILE_OVERWRITE = False
+#En caso de que hayan files con el mismo nombre False deja que sea posible. 
+
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+#this prioritize S3 buckets
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3ManifestStaticStorage'
+
