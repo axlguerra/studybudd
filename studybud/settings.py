@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$lk0+)t!_zn3*v58!%a_%=p$gjm_245=bobgyh)@b66dtm-0^b'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,9 +159,10 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
-MEDIA_URL = '/images/'
+
+# MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
@@ -178,15 +182,45 @@ CORS_ALLOWED_ORIGINS = True
 
 
 
-AWS_ACCESS_KEY_ID = 'AKIA22AAIARIXO7PKJVQ'
-AWS_SECRET_ACCESS_KEY =  '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'
-AWS_STORAGE_BUCKET_NAME = 'studybudstatic'
+# AWS_ACCESS_KEY_ID = 'AKIA22AAIARIXO7PKJVQ'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+
+# AWS_SECRET_ACCESS_KEY =  'VtSrodYVILkTBmf0gQyZLo8JDFGu5LClh+4OXMRi'
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+
+
+
+# AWS_STORAGE_BUCKET_NAME = 'studybudstatic'
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+
+
+# AWS_S3_CUSTOM_DOMAIN = r'%s.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.S3.amazonaws.com'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/images'
+
+
 
 AWS_S3_FILE_OVERWRITE = False
 #En caso de que hayan files con el mismo nombre False deja que sea posible. 
 
-AWS_DEFAULT_ACL = None
+# AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL='public-read'
+
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl':'max-age=86400'
+}
+
+AWS_LOCATION = 'static'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+}
 
 #this prioritize S3 buckets
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3ManifestStaticStorage'
